@@ -1,0 +1,24 @@
+{
+  "name": "lognext",
+  "version": "0.0.2",
+  "description": "The logger nobody asked for",
+  "main": "src/logger.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PrinceNebulon/lognext.git"
+  },
+  "keywords": [
+    "log",
+    "logger"
+  ],
+  "author": "Tim Smith",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PrinceNebulon/lognext/issues"
+  },
+  "homepage": "https://github.com/PrinceNebulon/lognext#readme",
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "winston": "^2.4.0"
+  }
+}
