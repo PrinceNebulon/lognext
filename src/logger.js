@@ -6,7 +6,7 @@ const Winston = require('winston');
 function Logger(topic, level) {
 	var self = this;
 
-	this.topic = topic ? `[${topic}]` : '';
+	this.topic = topic ? `[${topic}] ` : '';
 	level = level ? level : 'silly';
 
 	console.log(`Initializing logger for ${topic} at level ${level}`);
@@ -22,7 +22,7 @@ function Logger(topic, level) {
 	    ],
 	    filters: [
 	    	function(level, msg, meta) {
-	    		return `[${self.topic}] ${msg}`;
+	    		return `${self.topic}${msg}`;
 				}
 	    ]
 	});
