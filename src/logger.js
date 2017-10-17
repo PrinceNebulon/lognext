@@ -12,19 +12,19 @@ function Logger(topic, level) {
 	console.log(`Initializing logger for ${topic} at level ${level}`);
 
 	this.log = new Winston.Logger({
-	    transports: [
-	        new Winston.transports.Console({
-	            level: level,
-	            handleExceptions: true,
-	            json: false,
-	            colorize: true
-	        })
-	    ],
-	    filters: [
-	    	function(level, msg, meta) {
-	    		return `${self.topic}${msg}`;
-				}
-	    ]
+		transports: [
+			new Winston.transports.Console({
+				level: level,
+				handleExceptions: true,
+				json: false,
+				colorize: true
+			})
+		],
+		filters: [
+			function(level, msg) {
+				return `${self.topic}${msg}`;
+			}
+		]
 	});
 }
 
@@ -77,7 +77,7 @@ Logger.prototype.writeBoxedLine = function(string, width, padchar, level) {
 	var words = string.split(' ');
 	var rows = [];
 	var c = 0;
-	_.forEach(words, function(word, index) {
+	_.forEach(words, function(word) {
 		if (!rows[c]) rows[c] = '';
 		if (rows[c].length + word.length + 1 > cWidth) {
 			c++;
@@ -87,34 +87,34 @@ Logger.prototype.writeBoxedLine = function(string, width, padchar, level) {
 	});
 
 	var logObject = this.log;
-	_.forEach(rows, function(row, index) {
-		logObject.log(level, '║ ' + pad(row.trimRight(), cWidth, padchar) + ' ║');
+	_.forEach(rows, function(row) {
+		logObject.log(level, `║ ${pad(row.trimRight(), cWidth, padchar)} ║`);
 	});
 };
 
 Logger.prototype.writeBoxTop = function(width, level) {
 	level = checkLevel(level);
 	if (!width) width = this.defaultWidth;
-	this.log.log(level, '╔' + pad('', width - 2, '═') + '╗');
+	this.log.log(level, `╔${pad('', width - 2, '═')}╗`);
 };
 
 Logger.prototype.writeBoxSeparator = function(width, level) {
 	level = checkLevel(level);
 	if (!width) width = this.defaultWidth;
-	this.log.log(level, '╟' + pad('', width - 2, '─') + '╢');
+	this.log.log(level, `╟${pad('', width - 2, '─')}╢`);
 };
 
 Logger.prototype.writeBoxBottom = function(width, level) {
 	level = checkLevel(level);
 	if (!width) width = this.defaultWidth;
-	this.log.log(level, '╚' + pad('', width - 2, '═') + '╝');
+	this.log.log(level, `╚${pad('', width - 2, '═')}╝`);
 };
 
 Logger.prototype.writeBox = function(string, width, level) {
 	var self = this;
 
 	// Find width
-	var strings = string.split("\n");
+	var strings = string.split('\n');
 	var maxWidth = strings.reduce(function (a, b) { return a.length > b.length ? a : b; }).length;
 	if (!width)
 		width = maxWidth > this.defaultWidth ? this.defaultWidth : maxWidth + 5;
@@ -131,7 +131,7 @@ Logger.prototype.writeBox = function(string, width, level) {
 };
 
 function pad(value, length, padchar) {
-    return (value.toString().length < length) ? pad(value+padchar, length, padchar):value;
+	return (value.toString().length < length) ? pad(value+padchar, length, padchar):value;
 }
 
 function checkLevel(level) { return level ? level : 'debug'; }
@@ -150,31 +150,31 @@ function simpleStringify (object) {
 }
 
 function censor(censor) {
-  var i = 0;
-  var lastValue;
+	var i = 0;
+	var lastValue;
 
-  return function(key, value) {
+	return function(key, value) {
 
-    if(i !== 0 && typeof(censor) === 'object' && typeof(value) == 'object' && censor == value) 
-      return '[Circular]'; 
+		if(i !== 0 && typeof(censor) === 'object' && typeof(value) == 'object' && censor == value) 
+			return '[Circular]'; 
 
-    if(i >= 27) { 
-    	// seems to be a harded maximum of 30 serialized objects?
-      return '[Unknown]';
-    }
-
-    // Increment if we're looping, otherwise reset
-    if (lastValue !== value) {
-    	lastValue = value;
-    	i = 0;
-    } else {
-    	++i; // so we know we aren't using the original object anymore
+		if(i >= 27) { 
+			// seems to be a harded maximum of 30 serialized objects?
+			return '[Unknown]';
 		}
 
-    return value;  
-  };
+		// Increment if we're looping, otherwise reset
+		if (lastValue !== value) {
+			lastValue = value;
+			i = 0;
+		} else {
+			++i; // so we know we aren't using the original object anymore
+		}
+
+		return value;  
+	};
 }
 
 
 
-self = module.exports = Logger;
+module.exports = Logger;
