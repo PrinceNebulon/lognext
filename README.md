@@ -22,7 +22,7 @@ const log = new Lognext('topic-name');
 
 ## Learn by example!
 
-Standard stuff
+### Standard stuff
 
 ```JavaScript
 log.writeBox('Standard trace messages');
@@ -38,7 +38,7 @@ log.silly('Tee hee hee!');
 ![img](https://raw.githubusercontent.com/PrinceNebulon/lognext/master/images/standard-trace-messages.png)
 
 
-Objects can be traced out too!
+### Objects can be traced out too!
 
 ```JavaScript
 log.writeBox('Tracing with objects');
@@ -52,7 +52,7 @@ log.debug('Data: ', data);
 ![img](https://raw.githubusercontent.com/PrinceNebulon/lognext/master/images/tracing-with-objects.png)
 
 
-Color can be turned off for output windows that don't support ANSI colors.
+### Color can be turned off for output windows that don't support ANSI colors.
 
 ```JavaScript
 log.setUseColor(false);
@@ -67,7 +67,7 @@ log.silly('Tee hee hee!');
 ![img](https://raw.githubusercontent.com/PrinceNebulon/lognext/master/images/no-color.png)
 
 
-Trace levels can be controlled to disable traces above the set level.
+### Trace levels can be controlled to disable traces above the set level.
 
 ```JavaScript
 log.writeBox('Log Level Examples');
@@ -86,7 +86,7 @@ log.writeBox('Log Level Examples');
 ![img](https://raw.githubusercontent.com/PrinceNebulon/lognext/master/images/log-levels.png)
 
 
-Profile a string to measure time!
+### Profile a string to measure time!
 
 ```JavaScript
 log.profile('foo');
